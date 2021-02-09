@@ -6,6 +6,7 @@ export const actFetchProduct = (product) => {
         product
     }
 } 
+
 export const actOnDeleteProduct = (id) => {
     return { 
         type: Type.DELETE_PRODUCT,

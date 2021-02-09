@@ -12,15 +12,14 @@ const products = (state = initialState, action) => {
             state = action.product;
             return [...state];
         case Type.DELETE_PRODUCT:
+            let index = 0;
             callApi(`product/${action.id}`, 'DELETE', null).then(res => {
                 if(res.status == 200){
-                    let index = findIndex(state, function(o) { return o.id == action.id; });
-                    state.splice(index, 1);
-                    return [...state];
+                    index = findIndex(state, function(o) {return o.id == action.id});
                 }
-            }).catch(err => {
-                console.log(err);
-            })
+            });
+            state.splice(index,1);
+            return [...state];
         default:
             return [...state];
     }

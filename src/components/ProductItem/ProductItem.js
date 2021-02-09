@@ -22,7 +22,9 @@ class ProductItem extends Component {
     }
 
     onDeleteproduct = (id) => {
-        this.props.onDeleteProduct(id);
+        if(window.confirm('bạn có muốn xóa sản phẩm này khong')){
+            this.props.onDeleteProduct(id);
+        }
     }
 
   
