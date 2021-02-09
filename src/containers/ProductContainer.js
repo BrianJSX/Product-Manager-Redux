@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ProductList from '../components/ProductList/ProductList';
-import axios from 'axios';
 import { actFetchProduct, actOnDeleteProduct } from '../actions';
 import ProductItem from '../components/ProductItem/ProductItem';
+import callApi from '../utils/callApi';
 
 class ProductContainer extends Component {
 
     componentDidMount() { 
         let { onFetchProduct } = this.props;
-        axios({
-            method: 'get',
-            url: 'https://6020ba8f46f1e40017803627.mockapi.io/todoapp/product',
-        }).then(function (res) {
+        callApi('product', 'GET', null).then(res => {
             onFetchProduct(res.data);
         });
     }

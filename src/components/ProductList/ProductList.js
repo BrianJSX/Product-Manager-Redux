@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class ProductList extends Component {
 
@@ -8,7 +9,7 @@ class ProductList extends Component {
         return (
             <div className="row">
                 <div className="col-md-5 m-3 ">
-                    <button type="button" class="btn btn-primary">Thêm sản phẩm</button>
+                    <Link className="btn btn-primary" to='/product/add'>Thêm sản phẩm</Link>
                 </div>
                 <div className="col-md-9 mt-3 mx-auto">
                     <table className="table">

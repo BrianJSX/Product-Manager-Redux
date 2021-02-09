@@ -22,15 +22,15 @@ const routes = [
     {
         path: '/product/add',
         exact: false,
-        main:  () => {
-            return <ProductAction></ProductAction>
+        main:  (history) => {
+            return <ProductAction history={history}></ProductAction>
         }
     },
     {
         path: '/product/:id/edit',
         exact: false,
-        main:  (match) => {
-            return <ProductAction></ProductAction>
+        main:  (history) => {
+            return <ProductAction history={history}></ProductAction>
         }
     },
     {
