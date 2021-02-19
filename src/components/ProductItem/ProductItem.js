@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 
 class ProductItem extends Component {
 
+    onDeleteproduct = (id) => {
+        if(window.confirm('bạn có muốn xóa sản phẩm này không')){
+            this.props.onDeleteProduct(id);
+        }
+    }
+
     render() {
         let { product } = this.props;
         return (
@@ -21,12 +27,7 @@ class ProductItem extends Component {
         );
     }
 
-    onDeleteproduct = (id) => {
-        if(window.confirm('bạn có muốn xóa sản phẩm này khong')){
-            this.props.onDeleteProduct(id);
-        }
-    }
-
+    
   
 }
 

@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ProductList from '../components/ProductList/ProductList';
-import { actFetchProduct, actOnDeleteProduct } from '../actions';
+import { actOnDeleteProductRequest, actFetchProductRequest } from '../actions';
 import ProductItem from '../components/ProductItem/ProductItem';
-import callApi from '../utils/callApi';
 
 class ProductContainer extends Component {
 
     componentDidMount() { 
-        let { onFetchProduct } = this.props;
-        callApi('product', 'GET', null).then(res => {
-            onFetchProduct(res.data);
-        });
+        let {onFetchProduct} = this.props;
+        onFetchProduct();
     }
 
     render() {
@@ -48,11 +45,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        onFetchProduct: (products) => {
-            dispatch(actFetchProduct(products));
+        onFetchProduct: () => {
+            dispatch(actFetchProductRequest());
         },
         onDeleteProduct: (id) => {
-            dispatch(actOnDeleteProduct(id));
+            dispatch(actOnDeleteProductRequest(id));
         }
     }
 }

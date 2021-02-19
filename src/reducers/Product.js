@@ -1,9 +1,7 @@
 import * as Type from '../constants/ActionType';
 import { findIndex } from 'lodash';
-import callApi from '../utils/callApi';
 
 let initialState = [
-   
 ];
 
 const products = (state = initialState, action) => {
@@ -13,12 +11,11 @@ const products = (state = initialState, action) => {
             return [...state];
         case Type.DELETE_PRODUCT:
             let index = 0;
-            callApi(`product/${action.id}`, 'DELETE', null).then(res => {
-                if(res.status == 200){
-                    index = findIndex(state, function(o) {return o.id == action.id});
-                }
-            });
+            index = findIndex(state, function(o) {return o.id == action.id});
             state.splice(index,1);
+            return [...state];
+        case Type.ADD_PRODUCT:
+            state.push(action.product);
             return [...state];
         default:
             return [...state];

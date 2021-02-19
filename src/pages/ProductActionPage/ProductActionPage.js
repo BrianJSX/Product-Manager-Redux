@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import callApi from '../../utils/callApi';
 import { withRouter } from 'react-router';
+import {connect} from 'react-redux';
+import { actAddProductRequest } from '../../actions';
+
 
 class ProductActionPage extends Component {
 
@@ -26,16 +28,14 @@ class ProductActionPage extends Component {
     onSave = (e) => {
         e.preventDefault();
         let { txtName, txtPrice, txtStatus } = this.state;
-        let {history} = this.props;
-
-        callApi('product', 'POST', {
+        let { history } = this.props;
+        let product = { 
             name: txtName,
             price: txtPrice,
             status: txtStatus == "1" ? true : false
-        }).then( res => {        
-            history.goBack();
-            alert('thêm sản phẩm thành công');
-        });
+        }
+        this.props.onAddProduct(product);
+        history.goBack();
     }
 
     render() {
@@ -77,9 +77,20 @@ class ProductActionPage extends Component {
                     </div>
                 </form>
             </div>
-
         );
     }
 }
+// const mapStateToProps = (state) =>  {
+//     return {
 
-export default withRouter(ProductActionPage);
+//     }
+// }
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        onAddProduct : (product) => {
+            dispatch(actAddProductRequest(product));
+        }
+    }
+} 
+
+export default connect(null, mapDispatchToProps)(withRouter(ProductActionPage));

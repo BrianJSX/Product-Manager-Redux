@@ -1,2 +1,3 @@
 export const FETCH_PRODUCT = 'FETCH PRODUCT';
 export const DELETE_PRODUCT = 'DETELE PRODUCT';
+export const ADD_PRODUCT = 'ADD PRODUCT';

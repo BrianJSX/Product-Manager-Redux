@@ -5,12 +5,18 @@ import reportWebVitals from './reportWebVitals';
 
 // import redux
 import { Provider } from 'react-redux'
-import { createStore } from 'redux';
 import myReducer from './reducers/index'
+import thunk from 'redux-thunk';
+import { applyMiddleware, createStore, compose } from 'redux';
 
 const store = createStore(
   myReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  compose(
+    applyMiddleware(
+      thunk       
+    ),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  )
 );
 
 ReactDOM.render(
