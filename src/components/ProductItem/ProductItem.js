@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import {Link}  from 'react-router-dom'
 class ProductItem extends Component {
 
     onDeleteproduct = (id) => {
@@ -9,10 +9,11 @@ class ProductItem extends Component {
     }
 
     render() {
-        let { product } = this.props;
+        let { product, stt } = this.props;
+    
         return (
             <tr>
-                <td scope="row">1</td>
+                <td scope="row">{stt + 1}</td>
                 <td>{product.id}</td>
                 <td>{product.name}</td>
                 <td>{product.price}</td>
@@ -20,7 +21,7 @@ class ProductItem extends Component {
                     <span class={product.status ? 'badge badge-success': 'badge badge-danger'}>{product.status ? 'Nổi bật' : 'Không nổi bật'}</span>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-primary">Sửa</button>
+                    <Link className="btn btn-success" to={`product/${product.id}/edit`}>Sửa </Link>
                     <button onClick={ () => {this.onDeleteproduct(product.id)} } type="button" class="btn btn-danger ml-1">Xóa</button>
                 </td>
             </tr>

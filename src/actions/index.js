@@ -45,3 +45,33 @@ export const actOnDeleteProduct = (id) => {
         id
     }
 }
+
+export const actEditProductRequest = (id) => {
+    return (dispatch) => {
+        return callApi(`product/${id}`, 'GET', null).then((res)=>{
+            dispatch(actEditProduct(res.data));
+        })
+    }
+}
+
+export const actEditProduct = (product) => {
+    return {
+        type: Type.EDIT_PRODUCT,
+        product
+    }
+}
+
+export const actUpdateProductRequest = (product) => {
+    return (dispatch) => {
+        return callApi(`product/${product.id}`, 'PUT', product).then((res)=>{
+            dispatch(actUpdateProduct(res.data));
+        })
+    }
+}
+
+export const actUpdateProduct = (product) =>  {
+    return { 
+        type: Type.UPDATE_PRODUCT,
+        product
+    }
+}

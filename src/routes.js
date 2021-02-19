@@ -29,8 +29,8 @@ const routes = [
     {
         path: '/product/:id/edit',
         exact: false,
-        main:  (history) => {
-            return <ProductAction history={history}></ProductAction>
+        main:  (match) => {
+            return <ProductAction match={match}></ProductAction>
         }
     },
     {

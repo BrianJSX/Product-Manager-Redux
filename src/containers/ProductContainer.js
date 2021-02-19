@@ -25,7 +25,8 @@ class ProductContainer extends Component {
         result = products.map((product, index) => {
             return (
                 <ProductItem 
-                key={index} 
+                key={index}
+                stt={index} 
                 product={product}
                 onDeleteProduct={onDeleteProduct}
                 >

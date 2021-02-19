@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import {connect} from 'react-redux';
-import { actAddProductRequest } from '../../actions';
+import { actAddProductRequest, actEditProductRequest, actUpdateProductRequest } from '../../actions';
 
 
 class ProductActionPage extends Component {
@@ -11,8 +11,28 @@ class ProductActionPage extends Component {
         this.state = {
             txtName: '',
             txtPrice: '',
-            txtStatus: '0',
+            txtStatus: '',
             id: ''
+        }
+    }
+
+    componentDidMount() {
+        let {match} = this.props;
+        let id = match.params.id;
+        if(id){
+            this.props.onEditProduct(id)
+        }
+
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps &&  nextProps.productEdit) {
+            let {productEdit} = nextProps;
+            this.setState({
+                txtName: productEdit.name,
+                txtPrice: productEdit.price,
+                txtStatus: productEdit.status == true ? 1 : 0
+            });
         }
     }
 
@@ -29,17 +49,31 @@ class ProductActionPage extends Component {
         e.preventDefault();
         let { txtName, txtPrice, txtStatus } = this.state;
         let { history } = this.props;
-        let product = { 
-            name: txtName,
-            price: txtPrice,
-            status: txtStatus == "1" ? true : false
+        let {match} = this.props;
+
+        if (match.params.id) { 
+            let product = {
+                id: match.params.id,
+                name: txtName,
+                price: txtPrice,
+                status: txtStatus == "1" ? true : false
+            }
+            this.props.onUpdateProduct(product);
+            history.goBack();
+        } else {
+            let product = { 
+                name: txtName,
+                price: txtPrice,
+                status: txtStatus == "1" ? true : false
+            }
+            this.props.onAddProduct(product);
+            history.goBack();
         }
-        this.props.onAddProduct(product);
-        history.goBack();
     }
 
     render() {
         let { txtName, txtPrice, txtStatus } = this.state;
+
         return (
             <div className="container">
                 <form onSubmit={this.onSave}>
@@ -68,8 +102,8 @@ class ProductActionPage extends Component {
                             <div className="form-group">
                                 <label htmlFor>Hiển thị</label>
                                 <select className="form-control" name="txtStatus" value={txtStatus} onChange={this.onChange}>
-                                    <option value="0">Hiển thị</option>
-                                    <option value="1">Không hiển thị</option>
+                                    <option value="1">Hiển thị</option>
+                                    <option value="0">Không hiển thị</option>
                                 </select>
                             </div>
                             <button type="submit" className="btn btn-primary">Lưu</button>
@@ -80,17 +114,25 @@ class ProductActionPage extends Component {
         );
     }
 }
-// const mapStateToProps = (state) =>  {
-//     return {
 
-//     }
-// }
+const mapStateToProps = (state) =>  {
+    return {
+        productEdit: state.productEdit
+    }
+}
+
 const mapDispatchToProps = (dispatch, props) => {
     return {
         onAddProduct : (product) => {
             dispatch(actAddProductRequest(product));
+        },
+        onEditProduct: (id) => {
+            dispatch(actEditProductRequest(id));
+        },
+        onUpdateProduct: (product) =>  {
+            dispatch(actUpdateProductRequest(product));
         }
     }
 } 
 
-export default connect(null, mapDispatchToProps)(withRouter(ProductActionPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ProductActionPage));
